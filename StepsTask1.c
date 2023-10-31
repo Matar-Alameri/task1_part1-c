@@ -10,7 +10,25 @@ typedef struct {
 } FITNESS_DATA;
 
 // Define any additional variables here
+void read_function(){
+    char filename [] = "FitnessData_2023.csv";
+    FILE *request = fopen(filename, "r"); 
+    if (request == NULL) {
+        perror("");
+        
+    }
+    int buffer_size = 100;
+    char line_buffer[buffer_size];
+    while (fgets(line_buffer, buffer_size, request) != NULL) {
+        printf("%s\n", line_buffer);
+    }
 
+    fclose(request);
+
+}
+void requestedrows(FITNESS_DATA a){
+    
+}
 
 
 // This is your helper function. Do not change it in any way.
@@ -43,6 +61,9 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
+    
+    read_function();
+    return 0;
 
 
 }
