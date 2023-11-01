@@ -12,23 +12,29 @@ typedef struct {
 // Define any additional variables here
 void read_function(){
     char filename [] = "FitnessData_2023.csv";
-    FILE *request = fopen(filename, "r"); 
-    if (request == NULL) {
-        perror("");
+    FILE *file = fopen(filename, "r"); 
+    if (file == NULL) {
+        perror("couldn't open file");
         
     }
-    int buffer_size = 100;
-    char line_buffer[buffer_size];
-    while (fgets(line_buffer, buffer_size, request) != NULL) {
-        printf("%s\n", line_buffer);
+    int count = 0;
+    char linecount; 
+    linecount = fgetc(file); //extracts characters from the file and stores it in character linecount
+    while (linecount != EOF ) {
+        if (linecount == '\n'){ // implying that it will count for encountering a new line
+        
+            count = count + 1;
+        }
+            linecount = fgetc(file); //takes the next character from file until we reach end of file
     }
 
-    fclose(request);
+    fclose(file);
+    printf("number of records in file: %d\n", count);
 
 }
-void requestedrows(FITNESS_DATA a){
-    
-}
+//void requestedrows(FITNESS_DATA a){
+    //printf("%s/","%s/","%d/", a.date, a.time, a.steps);
+//}
 
 
 // This is your helper function. Do not change it in any way.
