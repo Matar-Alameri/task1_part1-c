@@ -10,7 +10,7 @@ typedef struct {
 } FITNESS_DATA;
 
 // Define any additional variables here
-void read_function(){
+void count_function(){
     char filename [] = "FitnessData_2023.csv";
     FILE *file = fopen(filename, "r"); 
     if (file == NULL) {
@@ -32,9 +32,42 @@ void read_function(){
     printf("number of records in file: %d\n", count);
 
 }
-//void requestedrows(FITNESS_DATA a){
+
+
+void print_record(int record_number, char date[11], char time[6], int steps)
+{
+    
+    printf("%s/%s/%d\n", date, time, steps);
+}
+void requestedrecords(){
+    char date[11];
+	char time[6];
+	int steps;
+    
     //printf("%s/","%s/","%d/", a.date, a.time, a.steps);
-//}
+    char filename [] = "FitnessData_2023.csv";
+    FILE *file = fopen(filename, "r");
+    int i = 1;
+    char *sp;
+    char record[100];
+    while (fgets(record, sizeof(record), file) != NULL){
+
+        if (i<=3){ // so it stops at third line
+            sp = strtok(record, ",");
+            strcpy(date, sp);
+            sp = strtok (NULL, ",");
+            strcpy (time, sp);
+            sp = strtok (NULL, ",");
+            steps = atoi(sp);
+            
+            
+            print_record(i, date, time, steps);
+        }
+        i++;
+    }
+    fclose(file);
+  
+}
 
 
 // This is your helper function. Do not change it in any way.
@@ -68,7 +101,8 @@ void tokeniseRecord(const char *input, const char *delimiter,
 // Complete the main function
 int main() {
     
-    read_function();
+    count_function();
+    requestedrecords();
     return 0;
 
 
