@@ -18,26 +18,26 @@ void count_function(){
         
     }
     int count = 0;
-    char linecount; 
-    linecount = fgetc(file); //extracts characters from the file and stores it in character linecount
-    while (linecount != EOF ) {
-        if (linecount == '\n'){ // implying that it will count for encountering a new line
+    char recordcount; 
+    recordcount = fgetc(file); //extracts characters from the file and stores it in character recordcount
+    while (recordcount != EOF ) { // while loop will stop when we reach end of file
+        if (recordcount == '\n'){ // implying that it will count for encountering a new line
         
             count = count + 1;
         }
-            linecount = fgetc(file); //takes the next character from file until we reach end of file
+            recordcount = fgetc(file); //takes the next character from file until we reach end of file
     }
 
     fclose(file);
     printf("number of records in file: %d\n", count);
 
-}
+}// I based this idea on https://www.sanfoundry.com/c-program-number-lines-text-file/
 
 
 void print_record(int record_number, char date[11], char time[6], int steps)
 {
     
-    printf("%s/%s/%d\n", date, time, steps);
+    printf("%s/%s/%d\n", date, time, steps); // void function to have the format printed in date/time/steps
 }
 void requestedrecords(){
     char date[11];
@@ -47,27 +47,28 @@ void requestedrecords(){
     //printf("%s/","%s/","%d/", a.date, a.time, a.steps);
     char filename [] = "FitnessData_2023.csv";
     FILE *file = fopen(filename, "r");
-    int i = 1;
-    char *sp;
-    char record[100];
-    while (fgets(record, sizeof(record), file) != NULL){
+    int i = 1; // i will be our number of records
+    char *sp; // string pointer
+    int buffer_size = 100;
+    char record[buffer_size];
+    while (fgets(record, buffer_size, file) != NULL){
 
-        if (i<=3){ // so it stops at third line
-            sp = strtok(record, ",");
-            strcpy(date, sp);
+        if (i<=3){ // so it stops at third record
+            sp = strtok(record, ","); // this code will start at the begining of the line and stop at the comma(delimiter) and assigning it to the string pointer 
+            strcpy(date, sp); // assign the string in the string pointer to the variable which is date
+            sp = strtok (NULL, ","); // wrote NULL so it begins from where I left off and that means it will begin from after the first comma until the second comma(delimiter) 
+            strcpy (time, sp); // assign the string in the string pointer to variable time
             sp = strtok (NULL, ",");
-            strcpy (time, sp);
-            sp = strtok (NULL, ",");
-            steps = atoi(sp);
+            steps = atoi(sp); // converting string in string pointer to integer and assigning it to variable steps
             
             
-            print_record(i, date, time, steps);
+            print_record(i, date, time, steps); //it will print until third record
         }
         i++;
     }
     fclose(file);
   
-}
+} // I based this idea on https://www.youtube.com/watch?v=BZFD-eEkhtw and https://arshovon.com/snippets/read-file-by-n-lines/
 
 
 // This is your helper function. Do not change it in any way.
