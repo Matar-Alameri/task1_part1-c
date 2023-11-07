@@ -29,7 +29,7 @@ void count_function(){
     }
 
     fclose(file);
-    printf("Number of records in file: %d\n", count);
+    printf("number of records in file: %d\n", count);
 
 }// I based this idea on https://www.sanfoundry.com/c-program-number-lines-text-file/
 
@@ -103,7 +103,17 @@ void tokeniseRecord(const char *input, const char *delimiter,
 int main() {
     
     count_function();
-    requestedrecords();
+    char filename [] = "FitnessData_2023.csv";
+    FILE *file = fopen(filename, "r");
+    int i = 1; // i will be our number of records
+    char *sp; // string pointer
+    int buffer_size = 100;
+    char record[buffer_size];
+    while (fgets(record, buffer_size, file) != NULL){
+        if (i<=3){
+            printf(i,tokeniseRecord(date, time, steps));
+        }
+    }
     return 0;
 
 
